@@ -12,9 +12,9 @@ export class HeaderComponent implements OnInit{
   }
   public icon: string=ETheme.ICON_MOON;
   public textTheme: string = ETheme.TEXT_MOON;
-  
-constructor(){
 
+constructor(){
+  this.verificarHora();
 }
 
   public toggle() {
@@ -26,5 +26,21 @@ constructor(){
 
     this.textTheme = ETheme.TEXT_MOON;
     return (this.icon = ETheme.ICON_MOON);
+}
+
+
+public verificarHora() {
+  const agora = new Date();
+  const horas = agora.getHours();
+
+  if (horas >= 18) {
+    if (!document.body.classList.contains('dark-theme')) {
+      this.toggle(); // Muda para o tema escuro se não estiver ativado
+    }
+  } else {
+    if (document.body.classList.contains('dark-theme')) {
+      this.toggle(); // Muda para o tema claro se o tema escuro estiver ativado
+    }
+  }
 }
 }
