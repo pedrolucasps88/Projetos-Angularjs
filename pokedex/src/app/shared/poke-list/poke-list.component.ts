@@ -8,6 +8,7 @@ import { PokeApiService } from 'src/app/service/poke-api.service';
 })
 export class PokeListComponent implements OnInit{
 
+  public tipoFiltro: string = ''; // Adicione esta linha
   private setAllPokemons: any;
   public getAllPokemons: any;
   
@@ -36,5 +37,19 @@ export class PokeListComponent implements OnInit{
 
     this.getAllPokemons = filter;
   }
+  filtrarPorTipo(tipo?: string) { // Adicione um argumento opcional aqui
+    if (tipo) {
+      const filter = this.setAllPokemons.filter((pokemon: any) => {
+        return pokemon.status.types.some((type: any) => type.type.name === tipo);
+      });
+      this.getAllPokemons = filter;
+    } else {
+      this.getAllPokemons = this.setAllPokemons;
+    }
+  }
 
+  mostrarTodos() {
+    this.tipoFiltro = ''; // Redefine o tipo de filtro para vazio
+    this.getAllPokemons = this.setAllPokemons; // Restaura a lista completa de Pokémons
+  }
 }
